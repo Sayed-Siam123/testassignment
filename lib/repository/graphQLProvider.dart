@@ -1,3 +1,6 @@
+import 'dart:convert';
+import 'dart:developer';
+
 import 'package:graphql_flutter/graphql_flutter.dart';
 import 'package:testassignment/model/TokenFreeListFetchModel.dart';
 import 'package:testassignment/repository/GraphQLConfig.dart';
@@ -42,19 +45,32 @@ class GraphQLProvider{
   Future<TokenFreeListFetchModel> getHolidayList() async {
     Queries queries = Queries();
 
-    GraphQLConfiguration graphQLConfiguration = new GraphQLConfiguration();
-
+    GraphQLConfiguration graphQLConfiguration = GraphQLConfiguration();
     GraphQLClient _client = graphQLConfiguration.clientToQuery();
     QueryResult result = await _client.query(
       QueryOptions(
         document: gql(queries.getHolidayListQuery()),
       ),
     );
+    var jsonData = json.encode(result.data);
+    log(jsonData);
+    return TokenFreeListFetchModel.fromMap(json.decode(jsonData));
+  }
 
-    print(result.data["getPackages"]["message"]);
-    print(result.data["getPackages"]["result"]["count"].toString());
-    print(result.data);
-    return TokenFreeListFetchModel.fromMap(result.data);
+
+  Future<TokenFreeListFetchModel> getHolidayListwithPagination({skip,limit}) async {
+    Queries queries = Queries();
+
+    GraphQLConfiguration graphQLConfiguration = GraphQLConfiguration();
+    GraphQLClient _client = graphQLConfiguration.clientToQuery();
+    QueryResult result = await _client.query(
+      QueryOptions(
+        document: gql(queries.getHolidayListQueryWithPagination(skip: skip,limit: limit)),
+      ),
+    );
+    var jsonData = json.encode(result.data);
+    log(jsonData);
+    return TokenFreeListFetchModel.fromMap(json.decode(jsonData));
   }
 
   /*_write(String text) async {

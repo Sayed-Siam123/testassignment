@@ -48,6 +48,42 @@ class Queries {
       }""";
   }
 
+  String getHolidayListQueryWithPagination({skip,limit}){
+    return """ 
+     {
+        getPackages(
+          pagination: {
+            skip: $skip
+            limit: $limit
+          }
+        )
+        {
+          statusCode
+          message
+          result {
+            count
+            packages {
+              uid
+              title
+              startingPrice
+              thumbnail
+              amenities {
+                title
+                icon
+              }
+              discount {
+                title
+                amount
+              }
+              durationText
+              loyaltyPointText
+              description
+            }
+          }
+        }
+      }""";
+  }
+
 
   String createEmptyCart(){
     return """

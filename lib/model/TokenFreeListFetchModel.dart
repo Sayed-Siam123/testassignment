@@ -1,53 +1,45 @@
 class TokenFreeListFetchModel {
   TokenFreeListFetchModel({
-    this.data,
-  });
-
-  final Data data;
-
-  factory TokenFreeListFetchModel.fromMap(Map<String, dynamic> json) => TokenFreeListFetchModel(
-    data: json["data"] == null ? null : Data.fromMap(json["data"]),
-  );
-
-  Map<String, dynamic> toMap() => {
-    "data": data == null ? null : data.toMap(),
-  };
-}
-
-class Data {
-  Data({
+    this.typename,
     this.getPackages,
   });
 
+  final String typename;
   final GetPackages getPackages;
 
-  factory Data.fromMap(Map<String, dynamic> json) => Data(
+  factory TokenFreeListFetchModel.fromMap(Map<String, dynamic> json) => TokenFreeListFetchModel(
+    typename: json["__typename"] == null ? null : json["__typename"],
     getPackages: json["getPackages"] == null ? null : GetPackages.fromMap(json["getPackages"]),
   );
 
   Map<String, dynamic> toMap() => {
+    "__typename": typename == null ? null : typename,
     "getPackages": getPackages == null ? null : getPackages.toMap(),
   };
 }
 
 class GetPackages {
   GetPackages({
+    this.typename,
     this.statusCode,
     this.message,
     this.result,
   });
 
+  final String typename;
   final int statusCode;
   final String message;
   final Result result;
 
   factory GetPackages.fromMap(Map<String, dynamic> json) => GetPackages(
+    typename: json["__typename"] == null ? null : json["__typename"],
     statusCode: json["statusCode"] == null ? null : json["statusCode"],
     message: json["message"] == null ? null : json["message"],
     result: json["result"] == null ? null : Result.fromMap(json["result"]),
   );
 
   Map<String, dynamic> toMap() => {
+    "__typename": typename == null ? null : typename,
     "statusCode": statusCode == null ? null : statusCode,
     "message": message == null ? null : message,
     "result": result == null ? null : result.toMap(),
@@ -56,19 +48,23 @@ class GetPackages {
 
 class Result {
   Result({
+    this.typename,
     this.count,
     this.packages,
   });
 
+  final String typename;
   final int count;
   final List<Package> packages;
 
   factory Result.fromMap(Map<String, dynamic> json) => Result(
+    typename: json["__typename"] == null ? null : json["__typename"],
     count: json["count"] == null ? null : json["count"],
     packages: json["packages"] == null ? null : List<Package>.from(json["packages"].map((x) => Package.fromMap(x))),
   );
 
   Map<String, dynamic> toMap() => {
+    "__typename": typename == null ? null : typename,
     "count": count == null ? null : count,
     "packages": packages == null ? null : List<dynamic>.from(packages.map((x) => x.toMap())),
   };
@@ -76,6 +72,7 @@ class Result {
 
 class Package {
   Package({
+    this.typename,
     this.uid,
     this.title,
     this.startingPrice,
@@ -87,6 +84,7 @@ class Package {
     this.description,
   });
 
+  final String typename;
   final String uid;
   final String title;
   final int startingPrice;
@@ -98,6 +96,7 @@ class Package {
   final String description;
 
   factory Package.fromMap(Map<String, dynamic> json) => Package(
+    typename: json["__typename"] == null ? null : json["__typename"],
     uid: json["uid"] == null ? null : json["uid"],
     title: json["title"] == null ? null : json["title"],
     startingPrice: json["startingPrice"] == null ? null : json["startingPrice"],
@@ -110,6 +109,7 @@ class Package {
   );
 
   Map<String, dynamic> toMap() => {
+    "__typename": typename == null ? null : typename,
     "uid": uid == null ? null : uid,
     "title": title == null ? null : title,
     "startingPrice": startingPrice == null ? null : startingPrice,
@@ -124,20 +124,24 @@ class Package {
 
 class Amenity {
   Amenity({
+    this.typename,
     this.title,
     this.icon,
   });
 
-  final String title;
+  final Typename typename;
+  final Title title;
   final String icon;
 
   factory Amenity.fromMap(Map<String, dynamic> json) => Amenity(
-    title: json["title"] == null ? null : json["title"],
+    typename: json["__typename"] == null ? null : typenameValues.map[json["__typename"]],
+    title: json["title"] == null ? null : titleValues.map[json["title"]],
     icon: json["icon"] == null ? null : json["icon"],
   );
 
   Map<String, dynamic> toMap() => {
-    "title": title == null ? null : title,
+    "__typename": typename == null ? null : typenameValues.reverse[typename],
+    "title": title == null ? null : titleValues.reverse[title],
     "icon": icon == null ? null : icon,
   };
 }
@@ -149,6 +153,12 @@ final titleValues = EnumValues({
   "car": Title.CAR,
   "plane": Title.PLANE,
   "train": Title.TRAIN
+});
+
+enum Typename { AMENITY }
+
+final typenameValues = EnumValues({
+  "Amenity": Typename.AMENITY
 });
 
 class EnumValues<T> {

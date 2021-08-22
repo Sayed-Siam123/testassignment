@@ -7,7 +7,7 @@ import 'package:get_storage/get_storage.dart';
 import 'package:testassignment/Bindings/AppBindings.dart';
 import 'package:testassignment/utils/color.dart';
 
-import 'UI/Views/home_page.dart';
+import 'UI/Views/first_page.dart';
 
 void main() async{
   WidgetsFlutterBinding.ensureInitialized();
@@ -38,7 +38,7 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.blue,
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
-      home: HomePage(),
+      home: FirstPage(),
     );
   }
 }
