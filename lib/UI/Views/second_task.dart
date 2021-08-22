@@ -85,6 +85,7 @@ class SecondTask extends StatelessWidget {
                       return AutoScrollTag(
                         index: index,
                         controller: _controller,
+                                key: ValueKey(index),
                                 child: Column(
                                   children: [
                                     Container(
