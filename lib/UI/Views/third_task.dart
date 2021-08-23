@@ -29,7 +29,7 @@ class ThirdTask extends StatelessWidget {
 
         return GetBuilder<HomeController>(
           initState: (_){
-            homeController.fetchTokenFreeListData();
+            homeController.fetchTokenFreeListDataWithDiscount();
           },
           init: HomeController(),
           builder: (controller) => SafeArea(
@@ -52,7 +52,7 @@ class ThirdTask extends StatelessWidget {
                         children: [
                     Padding(
                     padding: EdgeInsets.all(rootContainerSpacing),
-                    child: Text("${homeController.get_tfl_list.getPackages.result.count.toString()} Available Holidays",style: lgFontStyleBold.copyWith(fontSize: fSize(fontSize: large,mediaQueryWidth: sizingInformation.localWidgetSize.width))),
+                    child: Text("${homeController.get_tfl_list3.getPackages.result.count.toString()} Available Holidays",style: lgFontStyleBold.copyWith(fontSize: fSize(fontSize: large,mediaQueryWidth: sizingInformation.localWidgetSize.width))),
                   ),
                   Expanded(
                   child: Container(
@@ -60,8 +60,11 @@ class ThirdTask extends StatelessWidget {
                   child: ListView.builder(
                             padding: EdgeInsets.fromLTRB(rootContainerSpacing,0,rootContainerSpacing,rootContainerSpacing),
                             shrinkWrap: true,
-                            itemCount: homeController.get_tfl_list.getPackages.result.packages.length,
+                            itemCount: homeController.get_tfl_list3.getPackages.result.packages.length,
                             itemBuilder: (context, index) {
+
+                              print(homeController.get_tfl_list3.getPackages.result.packages[index].discount);
+
                               return Column(
                                 children: [
                                   Container(
@@ -95,7 +98,7 @@ class ThirdTask extends StatelessWidget {
                                                         borderRadius: BorderRadius.only(topLeft: Radius.circular(boxRadius)),
                                                     ),
                                                     child: CachedNetworkImage(
-                                                      imageUrl: homeController.get_tfl_list.getPackages.result.packages[index].thumbnail,
+                                                      imageUrl: homeController.get_tfl_list3.getPackages.result.packages[index].thumbnail,
                                                       imageBuilder: (context, imageProvider) => Container(
                                                         decoration: BoxDecoration(
                                                           borderRadius: BorderRadius.only(topLeft: Radius.circular(boxRadius)),
@@ -129,10 +132,10 @@ class ThirdTask extends StatelessWidget {
                                                             child: Column(
                                                               crossAxisAlignment: CrossAxisAlignment.start,
                                                               children: [
-                                                                Text("${homeController.get_tfl_list.getPackages.result.packages[index].title}",style: lgFontStyleBold.copyWith(fontSize: fSize(fontSize: large,mediaQueryWidth: sizingInformation.localWidgetSize.width), height: 1.5),),
+                                                                Text("${homeController.get_tfl_list3.getPackages.result.packages[index].title}",style: lgFontStyleBold.copyWith(fontSize: fSize(fontSize: large,mediaQueryWidth: sizingInformation.localWidgetSize.width), height: 1.5),),
                                                                 SizedBox(height: sizingInformation.localWidgetSize.height*0.007,),
                                                                 Expanded(
-                                                                  child: Text("${homeController.get_tfl_list.getPackages.result.packages[index].description}",
+                                                                  child: Text("${homeController.get_tfl_list3.getPackages.result.packages[index].description}",
                                                                     style: refontStyleRegular.copyWith(fontSize: fSize(fontSize: small,mediaQueryWidth: sizingInformation.localWidgetSize.width),color: preBlack,height: 1.2),overflow: TextOverflow.ellipsis,maxLines: 5,textAlign: TextAlign.left,),
                                                                 ),
                                                               ],
@@ -146,7 +149,7 @@ class ThirdTask extends StatelessWidget {
                                                                 children: [
                                                                   Icon(FontAwesome5.calendar, size: sizingInformation.localWidgetSize.width*0.031,color: primaryColor,),
                                                                   SizedBox(width: sizingInformation.localWidgetSize.width*0.01,),
-                                                                  Text("${homeController.get_tfl_list.getPackages.result.packages[index].durationText}",style: mdfontStyleMedium.copyWith(fontSize: fSize(fontSize: regular,mediaQueryWidth: sizingInformation.localWidgetSize.width)),),
+                                                                  Text("${homeController.get_tfl_list3.getPackages.result.packages[index].durationText}",style: mdfontStyleMedium.copyWith(fontSize: fSize(fontSize: regular,mediaQueryWidth: sizingInformation.localWidgetSize.width)),),
                                                                 ],
                                                               ),
                                                             ],
@@ -176,9 +179,10 @@ class ThirdTask extends StatelessWidget {
                                                   mainAxisAlignment: MainAxisAlignment.center,
                                                   crossAxisAlignment: CrossAxisAlignment.center,
                                                   children: [
-                                                    Icon(FontAwesome.star,size: sizingInformation.localWidgetSize.width*0.03,),
+                                                    homeController.get_tfl_list3.getPackages.result.packages[index].discount != null ? Icon(FontAwesome.star,size: sizingInformation.localWidgetSize.width*0.03,) : SizedBox(),
                                                     SizedBox(width: sizingInformation.localWidgetSize.width*0.01,),
-                                                    Text("Best Value",style: smFontStyleBold.copyWith(fontSize: fSize(fontSize: small,mediaQueryWidth: sizingInformation.localWidgetSize.width),),)
+                                                    homeController.get_tfl_list3.getPackages.result.packages[index].discount != null ? Text("-৳${homeController.get_tfl_list3.getPackages.result.packages[index].discount["amount"]}",style: smFontStyleBold.copyWith(fontSize: fSize(fontSize: small,mediaQueryWidth: sizingInformation.localWidgetSize.width),),)
+                                                        : Text("No Discount",style: smFontStyleBold.copyWith(fontSize: fSize(fontSize: small,mediaQueryWidth: sizingInformation.localWidgetSize.width),),),
                                                   ],
                                                 ),
                                               ),
@@ -214,11 +218,11 @@ class ThirdTask extends StatelessWidget {
                                                                 padding: EdgeInsets.zero,
                                                                 shrinkWrap: true,
                                                                 scrollDirection: Axis.horizontal,
-                                                                itemCount: homeController.get_tfl_list.getPackages.result.packages[index].amenities.length,
+                                                                itemCount: homeController.get_tfl_list3.getPackages.result.packages[index].amenities.length,
                                                                 itemBuilder: (context, index1) {
                                                                   return Row(
                                                                     children: [
-                                                                      SvgPicture.network("${homeController.get_tfl_list.getPackages.result.packages[index].amenities[index1].icon}",
+                                                                      SvgPicture.network("${homeController.get_tfl_list3.getPackages.result.packages[index].amenities[index1].icon}",
                                                                         height: fSize(fontSize: small,mediaQueryWidth: sizingInformation.localWidgetSize.width),
                                                                         color: secondaryColor,
                                                                       ),
@@ -228,7 +232,7 @@ class ThirdTask extends StatelessWidget {
                                                                 },
                                                               ),
                                                             ),
-                                                            Text("৳ ${NumberFormat.decimalPattern().format(homeController.get_tfl_list.getPackages.result.packages[index].startingPrice)}",style: lgFontStyleBold.copyWith(color: white,fontSize: fSize(fontSize: large,mediaQueryWidth: sizingInformation.localWidgetSize.width)),),
+                                                            Text("৳ ${NumberFormat.decimalPattern().format(homeController.get_tfl_list3.getPackages.result.packages[index].startingPrice)}",style: lgFontStyleBold.copyWith(color: white,fontSize: fSize(fontSize: large,mediaQueryWidth: sizingInformation.localWidgetSize.width)),),
                                                           ],
                                                         ),
                                                       ),

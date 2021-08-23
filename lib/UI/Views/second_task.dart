@@ -45,7 +45,7 @@ class SecondTask extends StatelessWidget {
               if(_controller.offset == _controller.position.maxScrollExtent){
                 print("Works!");
                 homeController.fetchTokenFreeListDataWithPagination(skip: 4,limit: 4);
-                await _controller.scrollToIndex(0, preferPosition: AutoScrollPosition.begin,duration: Duration(seconds: 2));
+                await _controller.scrollToIndex(0, preferPosition: AutoScrollPosition.begin,duration: Duration(seconds: 1));
               }
             });
 

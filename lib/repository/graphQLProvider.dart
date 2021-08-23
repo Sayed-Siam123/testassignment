@@ -42,10 +42,12 @@ class GraphQLProvider{
   }*/
 
 
+  GraphQLConfiguration graphQLConfiguration = GraphQLConfiguration();
+
+
   Future<TokenFreeListFetchModel> getHolidayList() async {
     Queries queries = Queries();
 
-    GraphQLConfiguration graphQLConfiguration = GraphQLConfiguration();
     GraphQLClient _client = graphQLConfiguration.clientToQuery();
     QueryResult result = await _client.query(
       QueryOptions(
@@ -61,11 +63,38 @@ class GraphQLProvider{
   Future<TokenFreeListFetchModel> getHolidayListwithPagination({skip,limit}) async {
     Queries queries = Queries();
 
-    GraphQLConfiguration graphQLConfiguration = GraphQLConfiguration();
     GraphQLClient _client = graphQLConfiguration.clientToQuery();
     QueryResult result = await _client.query(
       QueryOptions(
         document: gql(queries.getHolidayListQueryWithPagination(skip: skip,limit: limit)),
+      ),
+    );
+    var jsonData = json.encode(result.data);
+    log(jsonData);
+    return TokenFreeListFetchModel.fromMap(json.decode(jsonData));
+  }
+
+  Future<dynamic> login() async {
+    Queries queries = Queries();
+
+    GraphQLClient _client = graphQLConfiguration.clientToQuery();
+    QueryResult result = await _client.query(
+      QueryOptions(
+        document: gql(queries.loginQuery()),
+      ),
+    );
+    var jsonData = json.encode(result.data);
+    //log(jsonData);
+    return jsonData;
+  }
+
+  Future<TokenFreeListFetchModel> getHolidayListWithDiscount() async {
+    Queries queries = Queries();
+
+    GraphQLClient _client = graphQLConfiguration.clientToQueryToken();
+    QueryResult result = await _client.query(
+      QueryOptions(
+        document: gql(queries.getHolidayListQuery()),
       ),
     );
     var jsonData = json.encode(result.data);

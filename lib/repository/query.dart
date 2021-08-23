@@ -84,6 +84,28 @@ class Queries {
       }""";
   }
 
+  String loginQuery(){
+    return """ 
+     mutation {
+        loginClient (
+          auth: {
+            email: "devteam@saimonglobal.com"
+            deviceUuid: "7026a238-d078-48b5-862b-c3c7d21d8712"
+          }
+          password: "12345678"
+        )
+        {
+          message
+          statusCode
+          result {
+            token
+            refreshToken
+            expiresAt
+          }
+        }
+      }
+      """;
+  }
 
   String createEmptyCart(){
     return """
